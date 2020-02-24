@@ -6,6 +6,7 @@ import com.codetally.model.Codecost;
 import com.codetally.model.HourlyRate;
 import com.codetally.model.Timelog;
 import com.codetally.model.github.Commit;
+import com.codetally.model.github.Repository;
 import com.codetally.repository.ChargeRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -29,16 +30,19 @@ public class ChargeServiceImpl implements ChargeService{
 
     @Autowired
     private ChargeRepository chargeRepository;
+    
+    @Autowired
+    private RepositoryService repositoryService;
+
+    @Autowired
+    private LogService logService;
 
     @Override
     public void synchChargesByOwnernameAndRepo(String ownername, String repo) {
         try {
-            RepositoryService repositoryService = new RepositoryService();
-            long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(ownername, repo);
+            Repository repository = repositoryService.getSingleByOwnerAndRepo(ownername, repo);
 
-            LogService logService = new LogService();
-
-            chargeRepository.deleteAllCharges(repositoryId);
+            chargeRepository.deleteAllByRepository(repository);
             chargeRepository.deleteAllHourlyRates(repositoryId);
 
             String urlParameters = GithubConfiguration.client_id
@@ -57,11 +61,11 @@ public class ChargeServiceImpl implements ChargeService{
                 urlconnection.connect();
                 Gson gson = new Gson();
                 Codecost codecost = gson.fromJson(new InputStreamReader(urlconnection.getInputStream(), StandardCharsets.UTF_8), Codecost.class);
-                logService.addSingle(logService.createLogline(LogService.INFO, "The currency found was: " + codecost.getCurrency()), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "The currency found was: " + codecost.getCurrency()), repositoryId);
 
                 try {
                     Currency currency = Currency.getInstance(codecost.getCurrency().toUpperCase());
-                    logService.addSingle(logService.createLogline(LogService.INFO, "The currency symbol found was: " + currency.getSymbol()), repositoryId);
+                    logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "The currency symbol found was: " + currency.getSymbol()), repositoryId);
                     repositoryService.setCurrency(repositoryId, currency);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -83,53 +87,53 @@ public class ChargeServiceImpl implements ChargeService{
     }
     @Override
     public float calculateAuthorCharge(Commit commit, long repositoryId) {
-        LogService logService = new LogService();
+        LogServiceImpl logService = new LogServiceImpl();
         float codecost = 0f;
         try {
             for (String addedFile : commit.getAdded()) {
-                logService.addSingle(logService.createLogline(LogService.INFO, "An added record was found for " + addedFile), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "An added record was found for " + addedFile), repositoryId);
                 Charge addedCharge = chargeRepository.getSingle(commit.getAuthor().getEmail(), "added", repositoryId);
                 if (addedCharge.getChargeamount().isEmpty()) {
-                    logService.addSingle(logService.createLogline(LogService.WARN, "AUTHORAMOUNT not found for " + addedFile), repositoryId);
+                    logService.addSingle(logService.createLogline(LogServiceImpl.WARN, "AUTHORAMOUNT not found for " + addedFile), repositoryId);
                 } else {
                     codecost += Float.parseFloat(addedCharge.getChargeamount());
                 }
             }
             for (String modifiedFile : commit.getModified()) {
-                logService.addSingle(logService.createLogline(LogService.INFO, "A modified record was found for " + modifiedFile), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "A modified record was found for " + modifiedFile), repositoryId);
                 Charge modifiedCharge = chargeRepository.getSingle(commit.getAuthor().getEmail(), "modified", repositoryId);
                 if (modifiedCharge.getChargeamount().isEmpty()) {
-                    logService.addSingle(logService.createLogline(LogService.WARN, "AUTHORAMOUNT not found for " + modifiedCharge), repositoryId);
+                    logService.addSingle(logService.createLogline(LogServiceImpl.WARN, "AUTHORAMOUNT not found for " + modifiedCharge), repositoryId);
                 } else {
                     codecost += Float.parseFloat(modifiedCharge.getChargeamount());
                 }
             }
             for (String removedFile : commit.getRemoved()) {
-                logService.addSingle(logService.createLogline(LogService.INFO, "A removed record was found for " + removedFile), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "A removed record was found for " + removedFile), repositoryId);
                 Charge removedCharge = chargeRepository.getSingle(commit.getAuthor().getEmail(), "removed", repositoryId);
                 if (removedCharge.getChargeamount().isEmpty()) {
-                    logService.addSingle(logService.createLogline(LogService.WARN, "AUTHORAMOUNT not found for " + removedCharge), repositoryId);
+                    logService.addSingle(logService.createLogline(LogServiceImpl.WARN, "AUTHORAMOUNT not found for " + removedCharge), repositoryId);
                 } else {
                     codecost += Float.parseFloat(removedCharge.getChargeamount());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logService.addSingle(logService.createLogline(LogService.INFO, "An exception occurred calculating author charges: " + e.getMessage()), repositoryId);
+            logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "An exception occurred calculating author charges: " + e.getMessage()), repositoryId);
         }
         return codecost;
     }
     @Override
     public float calculateTaxCharge(long repositoryId, float chargeamount) {
-        LogService logService = new LogService();
-        logService.addSingle(logService.createLogline(LogService.INFO, "Looking up tax charges."), repositoryId);
+        LogServiceImpl logService = new LogServiceImpl();
+        logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Looking up tax charges."), repositoryId);
         float codecost = chargeamount;
         try {
 
             List<Charge> chargeList = chargeRepository.getAllTaxCharges("commit", "any", repositoryId);
-            logService.addSingle(logService.createLogline(LogService.INFO, "Found " + chargeList.size() + " tax charges."), repositoryId);
+            logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Found " + chargeList.size() + " tax charges."), repositoryId);
             for (Charge charge : chargeList) {
-                logService.addSingle(logService.createLogline(LogService.INFO, "Found tax charge " + charge.getDescription() + " of type " + charge.getCalculationtype() + " and amount " + charge.getChargeamount()), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Found tax charge " + charge.getDescription() + " of type " + charge.getCalculationtype() + " and amount " + charge.getChargeamount()), repositoryId);
                 if (charge.getCalculationtype().equalsIgnoreCase("percent")) {
                     codecost = codecost * (Float.parseFloat(charge.getChargeamount()) + 100) / 100;
                 } else if (charge.getCalculationtype().equalsIgnoreCase("flat")) {
@@ -138,7 +142,7 @@ public class ChargeServiceImpl implements ChargeService{
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logService.addSingle(logService.createLogline(LogService.INFO, "An exception occurred calculating tax charges: " + e.getMessage()), repositoryId);
+            logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "An exception occurred calculating tax charges: " + e.getMessage()), repositoryId);
         }
         return codecost;
     }
@@ -167,10 +171,10 @@ public class ChargeServiceImpl implements ChargeService{
                 HourlyRate hourlyRate = chargeRepository.getHourlyRate(commit.getAuthor().getEmail(), repositoryId);
 
                 float totalhours = Float.parseFloat(timelog.getHours()) + (Float.parseFloat(timelog.getMinutes()) / 60) + (Float.parseFloat(timelog.getSeconds()) / 60 / 60);
-                LogService logService = new LogService();
-                logService.addSingle(logService.createLogline(LogService.INFO, "Total hours worked is " + totalhours), repositoryId);
+                LogServiceImpl logService = new LogServiceImpl();
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Total hours worked is " + totalhours), repositoryId);
                 timecost = totalhours * Float.parseFloat(hourlyRate.getCostPerHour());
-                logService.addSingle(logService.createLogline(LogService.INFO, "Total cost for hours worked is " + timecost), repositoryId);
+                logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Total cost for hours worked is " + timecost), repositoryId);
 
                 urlconnection.disconnect();
             }
@@ -184,7 +188,7 @@ public class ChargeServiceImpl implements ChargeService{
     public String getChargeConfig(String owner, String repo) {
         Codecost codecost = new Codecost();
         try {
-            RepositoryService repositoryService = new RepositoryService();
+            RepositoryServiceImpl repositoryService = new RepositoryServiceImpl();
             long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
 
             codecost.setCurrency(repositoryService.getCurrency(repositoryId).getCurrencyCode());

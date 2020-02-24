@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.RepositoryService;
+import com.codetally.service.RepositoryServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +15,11 @@ import java.io.IOException;
 
 @WebServlet(value = "/repos/*")
 public class RepositoryController extends HttpServlet {
-    private RepositoryService repositoryService;
+    private RepositoryServiceImpl repositoryService;
 
     @Override
     public void init() throws ServletException {
-        repositoryService = new RepositoryService();
+        repositoryService = new RepositoryServiceImpl();
     }
 
     @Override

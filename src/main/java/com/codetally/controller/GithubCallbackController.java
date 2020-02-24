@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.MeService;
+import com.codetally.service.MeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +24,7 @@ public class GithubCallbackController extends HttpServlet {
         //try to detect if the app has been installed. If not, redirect back to https://github.com/apps/codetally/installations/new
         Map<String, String> mapQuery = queryToMap(req.getQueryString());
 
-        MeService meService = new MeService();
+        MeServiceImpl meService = new MeServiceImpl();
         resp.addHeader("set-cookie", meService.createCookie(meService.handleCallback(mapQuery.get("code"))));
         resp.addHeader("location", "/index.html");
         resp.setStatus(HttpURLConnection.HTTP_MOVED_TEMP);

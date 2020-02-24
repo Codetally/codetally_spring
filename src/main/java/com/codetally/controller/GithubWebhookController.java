@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.GithubWebhookService;
+import com.codetally.service.GithubWebhookServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ import java.net.HttpURLConnection;
 public class GithubWebhookController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        GithubWebhookService githubWebhookService = new GithubWebhookService();
+        GithubWebhookServiceImpl githubWebhookService = new GithubWebhookServiceImpl();
         githubWebhookService.addSingle(req.getInputStream());
 
         resp.setStatus(HttpURLConnection.HTTP_CREATED);

@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.ShieldService;
+import com.codetally.service.ShieldServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +15,11 @@ import java.io.IOException;
 
 @WebServlet(value = "/shield/*")
 public class ShieldController extends HttpServlet {
-    private ShieldService shieldService;
+    private ShieldServiceImpl shieldService;
 
     @Override
     public void init() throws ServletException {
-        shieldService = new ShieldService();
+        shieldService = new ShieldServiceImpl();
     }
 
     @Override

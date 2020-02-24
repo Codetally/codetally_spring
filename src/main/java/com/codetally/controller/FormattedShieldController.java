@@ -1,7 +1,7 @@
 package com.codetally.controller;
 
 import com.codetally.model.ShieldCost;
-import com.codetally.service.ShieldService;
+import com.codetally.service.ShieldServiceImpl;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -17,11 +17,11 @@ import java.io.IOException;
 
 @WebServlet(value = "/formattedshield/*")
 public class FormattedShieldController extends HttpServlet {
-    private ShieldService shieldService;
+    private ShieldServiceImpl shieldService;
 
     @Override
     public void init() throws ServletException {
-        shieldService = new ShieldService();
+        shieldService = new ShieldServiceImpl();
     }
 
     @Override

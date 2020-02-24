@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.MeService;
+import com.codetally.service.MeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +28,7 @@ public class MeController extends HttpServlet {
             }
         }
 
-        MeService meService = new MeService();
+        MeServiceImpl meService = new MeServiceImpl();
         String meString = meService.validateMe(token);
         if (meString == null || meString.isEmpty()) {
             resp.setStatus(HttpURLConnection.HTTP_UNAUTHORIZED);

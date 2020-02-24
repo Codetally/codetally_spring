@@ -3,10 +3,16 @@ package com.codetally.model.github;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
+@Entity
+@Table(name = "repo")
 public class Repository {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @SerializedName("archive_url")
     private String mArchiveUrl;
@@ -146,6 +152,14 @@ public class Repository {
     private Long mWatchers;
     @SerializedName("watchers_count")
     private Long mWatchersCount;
+
+    public Long getmId() {
+        return mId;
+    }
+
+    public void setmId(Long mId) {
+        this.mId = mId;
+    }
 
     public String getArchiveUrl() {
         return mArchiveUrl;

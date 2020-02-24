@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.CommitService;
+import com.codetally.service.CommitServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +15,11 @@ import java.io.IOException;
 
 @WebServlet(value = "/commits/*")
 public class CommitController extends HttpServlet {
-    private CommitService commitService;
+    private CommitServiceImpl commitService;
 
     @Override
     public void init() throws ServletException {
-        commitService = new CommitService();
+        commitService = new CommitServiceImpl();
     }
 
     @Override

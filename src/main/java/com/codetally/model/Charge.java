@@ -1,12 +1,24 @@
 package com.codetally.model;
 
+import com.codetally.model.github.Repository;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
+@Entity
+@Table(name = "charge")
 public class Charge {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "repoid")
+    private Repository repository;
 
     @SerializedName("action")
     private String mAction;
@@ -79,4 +91,19 @@ public class Charge {
         mEvent = event;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
 }

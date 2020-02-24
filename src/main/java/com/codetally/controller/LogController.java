@@ -1,6 +1,6 @@
 package com.codetally.controller;
 
-import com.codetally.service.LogService;
+import com.codetally.service.LogServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +15,11 @@ import java.io.IOException;
 
 @WebServlet(value = "/log/*")
 public class LogController extends HttpServlet {
-    private LogService logService;
+    private LogServiceImpl logService;
 
     @Override
     public void init() throws ServletException {
-        logService = new LogService();
+        logService = new LogServiceImpl();
     }
 
     @Override
