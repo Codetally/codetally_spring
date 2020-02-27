@@ -1,6 +1,7 @@
 package com.codetally.service;
 
 import com.codetally.model.Logline;
+import com.codetally.model.github.Repository;
 import com.codetally.repository.LogRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogRepository logRepository;
 
+    @Autowired
+    private RepositoryService repositoryService;
+
     public static final String INFO = "INFO";
     public static final String WARN = "WARNING";
     public static final String ERROR = "ERROR";
@@ -32,8 +36,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public String getLogLinesByOwnerAndRepo(String owner, String repo) {
 
-        RepositoryServiceImpl repositoryService = new RepositoryServiceImpl();
-        long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
+        Repository repository = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
         List<Logline> loglineList = null;
         try {
             loglineList = logRepository.getAllLoglines(repositoryId);

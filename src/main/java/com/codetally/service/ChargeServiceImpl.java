@@ -30,7 +30,7 @@ public class ChargeServiceImpl implements ChargeService{
 
     @Autowired
     private ChargeRepository chargeRepository;
-    
+
     @Autowired
     private RepositoryService repositoryService;
 
@@ -87,7 +87,7 @@ public class ChargeServiceImpl implements ChargeService{
     }
     @Override
     public float calculateAuthorCharge(Commit commit, long repositoryId) {
-        LogServiceImpl logService = new LogServiceImpl();
+
         float codecost = 0f;
         try {
             for (String addedFile : commit.getAdded()) {
@@ -125,7 +125,7 @@ public class ChargeServiceImpl implements ChargeService{
     }
     @Override
     public float calculateTaxCharge(long repositoryId, float chargeamount) {
-        LogServiceImpl logService = new LogServiceImpl();
+
         logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "Looking up tax charges."), repositoryId);
         float codecost = chargeamount;
         try {
@@ -188,7 +188,7 @@ public class ChargeServiceImpl implements ChargeService{
     public String getChargeConfig(String owner, String repo) {
         Codecost codecost = new Codecost();
         try {
-            RepositoryServiceImpl repositoryService = new RepositoryServiceImpl();
+
             long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
 
             codecost.setCurrency(repositoryService.getCurrency(repositoryId).getCurrencyCode());

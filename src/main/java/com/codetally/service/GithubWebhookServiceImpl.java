@@ -2,6 +2,7 @@ package com.codetally.service;
 
 import com.codetally.model.github.Commit;
 import com.codetally.model.github.GithubEvent;
+import com.codetally.model.github.Repository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,9 @@ public class GithubWebhookServiceImpl implements GithubWebhookService {
         }
         String repo = githubEvent.getRepository().getName();
 
-        long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
+        Repository repository = repositoryService.getSingleByOwnerAndRepo(owner, repo);
 
-        logService.resetLog(repositoryId);
+        logService.resetLog(repository);
 
         chargeService.synchChargesByOwnernameAndRepo(owner, repo);
 
