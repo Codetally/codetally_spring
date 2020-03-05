@@ -6,16 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="app" />
+        <module name="plugin-api" />
+        <module name="CodetallyPlugin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
+      <module name="CodetallyPlugin" target="1.7" />
+      <module name="plugin-api" target="1.7" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CodetallyPlugin" options="" />
       <module name="app" options="-parameters" />
+      <module name="plugin-api" options="-parameters" />
     </option>
   </component>
 </project>

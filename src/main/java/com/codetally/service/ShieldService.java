@@ -19,7 +19,7 @@ public class ShieldService {
     private static final Logger logger = LoggerFactory.getLogger(ShieldService.class);
 
     @Autowired
-    RepositoryService repositoryService;
+    ProjectService projectService;
 
     @Autowired
     CommitService commitService;
@@ -31,9 +31,9 @@ public class ShieldService {
 
     public ShieldCost getShieldCostByOwnerAndRepo(String owner, String repo) {
 
-        long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
+        long repositoryId = projectService.getSingleIdByOwnerAndRepo(owner, repo);
         float repoCost = commitService.getRepoCodecost(repositoryId);
-        Currency currency = repositoryService.getCurrency(repositoryId);
+        Currency currency = projectService.getCurrency(repositoryId);
         return getFriendlyShieldValue(repoCost, currency);
     }
 
@@ -92,9 +92,9 @@ public class ShieldService {
 
     public String getShieldByOwnerAndRepoAndCost(String owner, String repo, String shieldCost) {
 
-        Repository repository = repositoryService.getSingleByOwnerAndRepo(owner, repo);
+        Repository repository = projectService.getSingleByOwnerAndRepo(owner, repo);
         repository.getC
-        Currency currency = repositoryService.getCurrency(repositoryId);
+        Currency currency = projectService.getCurrency(repositoryId);
         ShieldCost shieldCostObject = getFriendlyShieldValue(Float.valueOf(shieldCost), currency);
 
         return shieldCostObject.getCurrency_sign() + " " + shieldCostObject.getAmount() + " " + shieldCostObject.getMultiplier();

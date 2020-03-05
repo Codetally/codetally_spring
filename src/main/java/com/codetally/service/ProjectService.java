@@ -1,14 +1,16 @@
 package com.codetally.service;
 
 import com.codetally.configuration.GithubConfiguration;
-import com.codetally.configuration.JavaMail;
+import com.codetally.model.Project;
 import com.codetally.model.github.Repository;
-import com.codetally.repository.RepoRepository;
+import com.codetally.repository.ProjectRepository;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -21,41 +23,28 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 
 /**
  * Created by greg on 25/06/17.
  */
 @Service
-public class RepositoryService {
+public class ProjectService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RepositoryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProjectService.class);
 
     @Autowired
-    private RepoRepository repoRepository;
+    private ProjectRepository projectRepository;
 
-    public String getAll() {
-        List<Repository> repositoryList = null;
-        try {
-            repositoryList = repoRepository.getAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-        return new Gson().toJson(repositoryList);
+    public List<Project> getAll() {
+        return projectRepository.getAll();
     }
 
     public String getAllByOwnername(String ownername) {
-        try {
-            //synchAllByOwnername should probably be exposed to the end user as an explicit action
-            synchAllByOwnername(ownername);
-            //Now would be a good time to mail.
-            JavaMail.SendMail(ownername);
-            List<Repository> repositoryList = repoRepository.getAllByOwnername(ownername);
-            return new Gson().toJson(repositoryList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+        //in the past, this was where a person signed in. An email was sent???
+        return projectRepository.getAllByOwnername(ownername);
     }
 
     private void synchAllByOwnername(String ownername) {
@@ -79,7 +68,7 @@ public class RepositoryService {
                 }.getType();
                 List<Repository> repositoryList = gson.fromJson(new InputStreamReader(urlconnection.getInputStream(), StandardCharsets.UTF_8), listType);
                 for (Repository repository : repositoryList) {
-                    if (repoRepository.getCountByOwnerAndRepo(ownername, repository.getName()) < 1) {
+                    if (projectRepository.getCountByOwnerAndRepo(ownername, repository.getName()) < 1) {
                         addSingle(repository);
                     }
                     urlconnection.disconnect();
@@ -93,7 +82,7 @@ public class RepositoryService {
     public String getSingle(int id) {
         Repository repository = null;
         try {
-            repository = repoRepository.getSingle(id);
+            repository = projectRepository.getSingle(id);
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -101,10 +90,10 @@ public class RepositoryService {
         return new Gson().toJson(repository);
     }
 
-    public Repository getSingleByOwnerAndRepo(String owner, String name) {
+    public Project getSingleByOwnerAndRepo(String owner, String name) {
         Repository repository = null;
         try {
-            repository = repoRepository.findByOwnerName(owner, name);
+            repository = projectRepository.findByOwnerName(owner, name);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,7 +103,7 @@ public class RepositoryService {
     public long getSingleIdByOwnerAndRepo(String owner, String name) {
         long repositoryId = 0;
         try {
-            repositoryId = repoRepository.getSingleIdByOwnerAndRepo(owner, name);
+            repositoryId = projectRepository.getSingleIdByOwnerAndRepo(owner, name);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,7 +116,7 @@ public class RepositoryService {
 
     public boolean addSingle(Repository repository, float codecost) {
         try {
-            repoRepository.addRepo(repository, codecost);
+            projectRepository.addRepo(repository, codecost);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -143,7 +132,7 @@ public class RepositoryService {
 
     public void setCurrency(long repositoryId, Currency currency) {
         try {
-            repoRepository.setCurrency(repositoryId, currency);
+            projectRepository.setCurrency(repositoryId, currency);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,7 +141,7 @@ public class RepositoryService {
     public Currency getCurrency(long repositoryId) {
         Currency currency = null;
         try {
-            currency = repoRepository.getCurrency(repositoryId);
+            currency = projectRepository.getCurrency(repositoryId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,9 +150,20 @@ public class RepositoryService {
 
     public void setCodecost(long repositoryId, float codecost) {
         try {
-            repoRepository.setCodecost(repositoryId, codecost);
+            projectRepository.setCodecost(repositoryId, codecost);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Project getByKey(String projectKey) {
+        Project project = new Project();
+        project.setProjectkey(projectKey);
+        Example<Project> projectExample = Example.of(project, ExampleMatcher.matchingAny());
+        return projectRepository.findOne(projectExample).get();
+    }
+
+    public void save(Project project) {
+        projectRepository.save(project);
     }
 }

@@ -4,8 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.codetally</groupId>
     <artifactId>app</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>CodetallyPlugin</module>
+        <module>plugin-api</module>
+    </modules>
     <name>Codetally Application</name>
     <url>https://www.codetally.com</url>
 

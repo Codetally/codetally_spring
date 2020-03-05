@@ -26,7 +26,7 @@ public class LogService {
     private LogRepository logRepository;
 
     @Autowired
-    private RepositoryService repositoryService;
+    private ProjectService projectService;
 
     public static final String INFO = "INFO";
     public static final String WARN = "WARNING";
@@ -35,7 +35,7 @@ public class LogService {
 
     public String getLogLinesByOwnerAndRepo(String owner, String repo) {
 
-        Repository repository = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
+        Repository repository = projectService.getSingleIdByOwnerAndRepo(owner, repo);
         List<Logline> loglineList = null;
         try {
             loglineList = logRepository.getAllLoglines(repositoryId);

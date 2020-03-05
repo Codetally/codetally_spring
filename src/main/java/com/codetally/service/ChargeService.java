@@ -1,10 +1,7 @@
 package com.codetally.service;
 
 import com.codetally.configuration.GithubConfiguration;
-import com.codetally.model.Charge;
-import com.codetally.model.Codecost;
-import com.codetally.model.HourlyRate;
-import com.codetally.model.Timelog;
+import com.codetally.model.*;
 import com.codetally.model.github.Commit;
 import com.codetally.model.github.Repository;
 import com.codetally.repository.ChargeRepository;
@@ -18,11 +15,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
 /**
  * Created by greg on 25/06/17.
+ * CRUD for charge "templates"
  */
 @Service
 public class ChargeService {
@@ -32,14 +31,14 @@ public class ChargeService {
     private ChargeRepository chargeRepository;
 
     @Autowired
-    private RepositoryService repositoryService;
+    private ProjectService projectService;
 
     @Autowired
     private LogService logService;
 
     public void synchChargesByOwnernameAndRepo(String ownername, String repo) {
         try {
-            Repository repository = repositoryService.getSingleByOwnerAndRepo(ownername, repo);
+            Repository repository = projectService.getSingleByOwnerAndRepo(ownername, repo);
 
             chargeRepository.deleteAllByRepository(repository);
             chargeRepository.deleteAllHourlyRates(repositoryId);
@@ -65,7 +64,7 @@ public class ChargeService {
                 try {
                     Currency currency = Currency.getInstance(codecost.getCurrency().toUpperCase());
                     logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "The currency symbol found was: " + currency.getSymbol()), repositoryId);
-                    repositoryService.setCurrency(repositoryId, currency);
+                    projectService.setCurrency(repositoryId, currency);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -83,6 +82,10 @@ public class ChargeService {
             // common log spam. oftn repos will lack  codetally file. only way to defend is to create one on the fly...
             //e.printStackTrace();
         }
+    }
+    public List<Charge> calculateCharges(Event event) {
+        List<Charge> returnCharges = new ArrayList<>();
+        return returnCharges;
     }
     public float calculateAuthorCharge(Commit commit, long repositoryId) {
 
@@ -184,9 +187,9 @@ public class ChargeService {
         Codecost codecost = new Codecost();
         try {
 
-            long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
+            long repositoryId = projectService.getSingleIdByOwnerAndRepo(owner, repo);
 
-            codecost.setCurrency(repositoryService.getCurrency(repositoryId).getCurrencyCode());
+            codecost.setCurrency(projectService.getCurrency(repositoryId).getCurrencyCode());
             codecost.setCharges(chargeRepository.getAllCharges(repositoryId));
             codecost.setHourlyRates(chargeRepository.getAllHourlyRates(repositoryId));
         } catch (Exception e) {

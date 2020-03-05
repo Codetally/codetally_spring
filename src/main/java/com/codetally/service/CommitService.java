@@ -25,7 +25,7 @@ public class CommitService {
     private CommitRepository commitRepository;
 
     @Autowired
-    private RepositoryService repositoryService;
+    private ProjectService projectService;
 
     public boolean isTimelog(Commit commit) {
         for (String addFile : commit.getAdded()) {
@@ -59,8 +59,8 @@ public class CommitService {
 
     public String getCurrent(String owner, String repo) {
 
-        long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
-        Repository repository = repositoryService.getSingleByOwnerAndRepo(owner, repo);
+        long repositoryId = projectService.getSingleIdByOwnerAndRepo(owner, repo);
+        Repository repository = projectService.getSingleByOwnerAndRepo(owner, repo);
 
         CalculationResult calculationResult = new CalculationResult();
 
@@ -73,7 +73,7 @@ public class CommitService {
             calculationResult = Commit2CalculationResult(commit);
             calculationResult.setHtmlUrl(repository.getHtmlUrl());
             calculationResult.setRepoTotalCost(String.valueOf(commitRepository.getRepoCodecost(repositoryId)));
-            Currency currency = repositoryService.getCurrency(repositoryId);
+            Currency currency = projectService.getCurrency(repositoryId);
             calculationResult.setCalculationCurrency(currency.getCurrencyCode());
             calculationResult.setElapsedTime(commitRepository.getElapsedTime(commit.getId()));
             calculationResult.setCalculationValue(commitRepository.getCommitCodecost(commit.getId()));
@@ -87,8 +87,8 @@ public class CommitService {
 
     public String getHistory(String owner, String repo) {
 
-        long repositoryId = repositoryService.getSingleIdByOwnerAndRepo(owner, repo);
-        Repository repository = repositoryService.getSingleByOwnerAndRepo(owner, repo);
+        long repositoryId = projectService.getSingleIdByOwnerAndRepo(owner, repo);
+        Repository repository = projectService.getSingleByOwnerAndRepo(owner, repo);
         List<CalculationResult> calculationResultList = new ArrayList<>();
 
         try {
@@ -96,7 +96,7 @@ public class CommitService {
             for (Commit commit : commitList) {
                 CalculationResult calculationResult = Commit2CalculationResult(commit);
                 calculationResult.setHtmlUrl(repository.getHtmlUrl());
-                Currency currency = repositoryService.getCurrency(repositoryId);
+                Currency currency = projectService.getCurrency(repositoryId);
                 calculationResult.setCalculationCurrency(currency.getCurrencyCode());
                 float historicalCost = commitRepository.getRepoCodecostByDate(repositoryId, calculationResult.getCommitDate());
                 calculationResult.setRepoTotalCost(String.valueOf(historicalCost));

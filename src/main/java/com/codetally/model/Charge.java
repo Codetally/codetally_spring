@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import javax.annotation.Generated;
 import javax.persistence.*;
 
+//Charges exist only in an administrative sense. Weird? We track events relative to a project,
+// but do not store the resulting charges. I guess the idea here is to allow recalculations...
+
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
 @Entity

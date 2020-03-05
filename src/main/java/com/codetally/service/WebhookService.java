@@ -1,5 +1,9 @@
 package com.codetally.service;
 
+import com.codetally.model.Charge;
+import com.codetally.model.Event;
+import com.codetally.model.EventAdapter;
+import com.codetally.model.Project;
 import com.codetally.model.github.Commit;
 import com.codetally.model.github.GithubEvent;
 import com.codetally.model.github.Repository;
@@ -7,22 +11,24 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * Created by greg on 25/06/17.
  */
 @Service
-public class GithubWebhookService {
-    private static final Logger logger = LoggerFactory.getLogger(GithubWebhookService.class);
+public class WebhookService {
+    private static final Logger logger = LoggerFactory.getLogger(WebhookService.class);
 
     @Autowired
-    private RepositoryService repositoryService;
+    private ProjectService projectService;
 
     @Autowired
     private LogService logService;
@@ -33,8 +39,24 @@ public class GithubWebhookService {
     @Autowired
     private CommitService commitService;
 
-    public void add(GithubEvent githubEvent) {
+    @Autowired
+    @Qualifier("eventAdapterListFactoryBean")
+    Object eventAdapters;
 
+    public void processWebhook(String body) {
+
+        ((List<EventAdapter>) eventAdapters)
+                .forEach(eventAdapter ->
+                {
+                    System.out.println("Sending in raw data");
+                    List<Event> eventList = eventAdapter.getEvents(body);
+                    eventList.forEach(event -> {
+                        Project project = projectService.getByKey(event.getProjectKey());
+                        List<Charge> chargeList = chargeService.calculateCharges(event);
+                        project.getCharges().addAll(chargeList);
+                        projectService.save(project);
+                    });
+                });
     }
 
     public void addSingle(InputStream inputStream) throws UnsupportedEncodingException {
@@ -42,7 +64,7 @@ public class GithubWebhookService {
         Gson gson = new Gson();
         GithubEvent githubEvent = gson.fromJson(new InputStreamReader(inputStream, StandardCharsets.UTF_8), GithubEvent.class);
 
-        repositoryService.addSingle(githubEvent.getRepository());
+        projectService.addSingle(githubEvent.getRepository());
 
         String owner = githubEvent.getRepository().getOwner().getLogin();
         if (owner == null) {
@@ -50,7 +72,7 @@ public class GithubWebhookService {
         }
         String repo = githubEvent.getRepository().getName();
 
-        Repository repository = repositoryService.getSingleByOwnerAndRepo(owner, repo);
+        Repository repository = projectService.getSingleByOwnerAndRepo(owner, repo);
 
         logService.resetLog(repository);
 
@@ -78,6 +100,6 @@ public class GithubWebhookService {
         float codecost = commitService.getRepoCodecost(repositoryId);
         logService.addSingle(logService.createLogline(LogServiceImpl.INFO, "The current repo cost is " + codecost), repositoryId);
 
-        repositoryService.setCodecost(repositoryId, codecost);
+        projectService.setCodecost(repositoryId, codecost);
     }
 }
