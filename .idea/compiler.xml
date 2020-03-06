@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="plugin-api" />
+        <module name="webserver" />
         <module name="CodetallyPlugin" />
       </profile>
     </annotationProcessing>
@@ -14,6 +15,7 @@
       <module name="app" target="1.8" />
       <module name="CodetallyPlugin" target="1.7" />
       <module name="plugin-api" target="1.7" />
+      <module name="webserver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -21,6 +23,7 @@
       <module name="CodetallyPlugin" options="" />
       <module name="app" options="-parameters" />
       <module name="plugin-api" options="-parameters" />
+      <module name="webserver" options="-parameters" />
     </option>
   </component>
 </project>
