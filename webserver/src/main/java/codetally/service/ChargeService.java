@@ -24,9 +24,6 @@ public class ChargeService {
     private ChargeRepository chargeRepository;
 
     @Autowired
-    private ProjectService projectService;
-
-    @Autowired
     private LogService logService;
 
     public List<Charge> calculateCharges(Project project, Event event) {
@@ -78,5 +75,19 @@ public class ChargeService {
         }
 
         return returnTransaction;
+    }
+
+    //create and update
+    public void save(Charge charge) {
+        chargeRepository.save(charge);
+    }
+    //read
+    public List<Charge> getAll() {
+        return chargeRepository.findAll();
+    }
+    //delete
+    public void deleteCharge(Charge charge) {
+        //charges is use may not be deleted.
+        chargeRepository.delete(charge);
     }
 }

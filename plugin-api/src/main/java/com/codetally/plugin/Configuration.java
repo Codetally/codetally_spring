@@ -4,6 +4,10 @@ public class Configuration {
     private String author;
     private boolean isActive;
     private String src;
+    private String description;
+    private String version;
+    private String logoUrl;
+
 
     public String getAuthor() {
         return author;
