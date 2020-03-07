@@ -1,5 +1,5 @@
 package codetally.model;
 
-public enum ActionType {
+public enum TransactionType {
     file_added, file_modified, file_removed
 }

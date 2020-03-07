@@ -157,7 +157,13 @@ public class ProjectService {
         Project project = new Project();
         project.setProjectkey(projectKey);
         Example<Project> projectExample = Example.of(project, ExampleMatcher.matchingAny());
-        return projectRepository.findOne(projectExample).get();
+        Project returnProject = projectRepository.findOne(projectExample).get();
+        if (returnProject==null) {
+            projectRepository.save(project);
+            return project;
+        }
+
+        return returnProject;
     }
 
     public void save(Project project) {

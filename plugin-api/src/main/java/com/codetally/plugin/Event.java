@@ -1,19 +1,9 @@
 package com.codetally.plugin;
 
-
 import java.util.Date;
-import java.util.List;
 
-//An event comes from model, gitlab, or sourcex. it does not know about this service.
-//somehow it must express what it is, and how it will affect charges.
-//it cannot know what a "charge" is.
-//it can know who,what,when,where
-//@Entity
-//@Table(name = "event")
 public class Event {
 
-  //  @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String host; //model.com, bitbucket, etc
 
@@ -26,8 +16,12 @@ public class Event {
     private Date created;
     //where
     private String src; //a url to the source of this event. This might be a model commit, for example.
+
+    private String ref; //the name of the file added.
     //override
     private double overrideValue; //forget the charges, I am TELLING you how much to charge.
+
+    private EventAction eventAction;
 
     public Long getId() {
         return id;
@@ -91,5 +85,21 @@ public class Event {
 
     public void setOverrideValue(double overrideValue) {
         this.overrideValue = overrideValue;
+    }
+
+    public EventAction getEventAction() {
+        return eventAction;
+    }
+
+    public void setEventAction(EventAction eventAction) {
+        this.eventAction = eventAction;
+    }
+
+    public String getRef() {
+        return ref;
+    }
+
+    public void setRef(String ref) {
+        this.ref = ref;
     }
 }

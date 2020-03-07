@@ -18,7 +18,10 @@ public class Project {
     private String currencycode;
     private String projecturl;
 
+    //What is this? The possible future charges? Or this past charges?
     private List<Charge> charges;
+
+    private List<Transaction> transactions;
 
     public Long getId() {
         return id;
@@ -82,5 +85,13 @@ public class Project {
 
     public void setCharges(List<Charge> charges) {
         this.charges = charges;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
