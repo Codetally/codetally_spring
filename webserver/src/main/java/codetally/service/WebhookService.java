@@ -2,7 +2,6 @@ package codetally.service;
 
 import codetally.model.Charge;
 import codetally.model.Project;
-
 import codetally.model.Transaction;
 import com.codetally.plugin.Event;
 import com.codetally.plugin.EventAdapter;

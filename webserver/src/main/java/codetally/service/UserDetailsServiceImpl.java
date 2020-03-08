@@ -1,9 +1,9 @@
 package codetally.service;
 
 
-import codetally.repository.UserRepository;
 import codetally.model.Role;
 import codetally.model.User;
+import codetally.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

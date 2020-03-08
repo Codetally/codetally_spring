@@ -1,6 +1,5 @@
 package codetally.model;
 
-import codetally.model.github.Repository;
 import com.codetally.plugin.EventAction;
 import com.google.gson.annotations.SerializedName;
 

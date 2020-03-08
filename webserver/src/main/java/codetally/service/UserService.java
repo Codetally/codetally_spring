@@ -1,9 +1,9 @@
 package codetally.service;
 
 
+import codetally.model.User;
 import codetally.repository.RoleRepository;
 import codetally.repository.UserRepository;
-import codetally.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

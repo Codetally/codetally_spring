@@ -7,6 +7,7 @@ import com.codetally.plugin.EventAdapter;
 import com.github.model.Commit;
 import com.github.model.GithubEvent;
 import com.google.gson.Gson;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;

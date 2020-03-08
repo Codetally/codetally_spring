@@ -1,7 +1,10 @@
 package codetally.service;
 
 
-import codetally.model.*;
+import codetally.model.Charge;
+import codetally.model.ChargeType;
+import codetally.model.Project;
+import codetally.model.Transaction;
 import codetally.repository.ChargeRepository;
 import com.codetally.plugin.Event;
 import org.slf4j.Logger;
