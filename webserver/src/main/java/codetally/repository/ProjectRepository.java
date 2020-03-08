@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     Project findByOwnerName(String owner, String name);
     List<Project> findByProjectnameContainingIgnoreCase(String keywords, Pageable pageable);
+
+    Project findByProjectname(String projectname);
 }

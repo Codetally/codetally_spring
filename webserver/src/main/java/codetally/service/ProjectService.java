@@ -52,10 +52,14 @@ public class ProjectService {
         return projectRepository.getOne(id);
     }
 
-    public void save(Project project) {
+    public Project save(Project project) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User loggedUser = userService.findByUsername(authentication.getName());
         project.setUser(loggedUser);
-        projectRepository.save(project);
+        return projectRepository.save(project);
+    }
+
+    public Project findByProjectname(String projectname) {
+        return projectRepository.findByProjectname(projectname);
     }
 }

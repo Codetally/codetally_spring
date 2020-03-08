@@ -4,6 +4,7 @@ import codetally.model.Project;
 import codetally.model.User;
 import codetally.service.ProjectService;
 import codetally.service.UserService;
+import codetally.validator.ProjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -26,16 +27,17 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private ProjectValidator projectValidator;
+
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/projects/{projectid}", method = RequestMethod.GET)
     public String getSingleProject(Model model, @PathVariable Long projectid) {
 
         Project singleproject = projectService.getById(projectid);
-        User singleUser = userService.getOne(singleproject.getCreatedby());
 
         model.addAttribute("singleproject", singleproject);
-        model.addAttribute("singleuser", singleUser);
         model.addAttribute("pageTitle", singleproject.getProjectname());
 
         return "projectview";
@@ -51,19 +53,14 @@ public class ProjectController {
     }
     @RequestMapping(value = "/projects/create", method = RequestMethod.POST)
     public String projectCreate(@ModelAttribute("projectForm") Project projectForm, BindingResult bindingResult, Model model, Principal principal) {
-        String name = principal.getName();
-        User loggedUser = userService.findByUsername(name);
-        projectForm.setCreatedby(loggedUser.getId());
-        projectForm.setDatecreated(new Date());
-
         projectValidator.validate(projectForm, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("pageTitle", "Create a new project - but please fix these errors!");
             return "projectcreate";
         }
 
-        projectService.save(projectForm);
-        return "redirect:/members/"+name;
+        Project newProject = projectService.save(projectForm);
+        return "redirect:/projects/"+newProject.getId();
     }
     @RequestMapping(value = "/projects/search", method = RequestMethod.GET)
     public String searchforprojects(Model model, Pageable pageable,
