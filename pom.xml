@@ -10,6 +10,7 @@
         <module>CodetallyPlugin</module>
         <module>plugin-api</module>
         <module>webserver</module>
+        <module>shield</module>
     </modules>
     <name>Codetally Application</name>
     <url>https://www.codetally.com</url>

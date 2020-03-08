@@ -1,4 +1,4 @@
-package codetally.controller;
+package com.codetally.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +11,11 @@ public class ShieldController {
     private ShieldService shieldService;
 
     @ResponseBody
-    @RequestMapping(value = "/shield/{owner}/{project}/{cost}", method = RequestMethod.GET , produces = "image/svg+xml")
-    protected String getShield(@PathVariable String owner,
-                               @PathVariable String project,
+    @RequestMapping(value = "/shield/{projectid}/{cost}", method = RequestMethod.GET , produces = "image/svg+xml")
+    protected String getShield(@PathVariable Long projectid,
                                @PathVariable String cost)  {
 
-        return shieldService.getShieldByOwnerAndRepoAndCost(owner, project, cost);
+        return shieldService.getShieldByProjectId(projectid, cost);
         String[] parts = req.getRequestURI().split("/");
         String friendlyCost = "";
         if (parts.length == UrlPart.PARTSWITHOUTCOST) {

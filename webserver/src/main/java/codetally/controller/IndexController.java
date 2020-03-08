@@ -17,8 +17,6 @@ import java.util.Random;
 
 @Controller
 public class IndexController {
-    @Autowired
-    ServletContext servletContext;
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String index(Model model, Principal principal) {
@@ -27,14 +25,5 @@ public class IndexController {
         }
         model.addAttribute("pageTitle", "#1 Inspection Marketplace for Inspector Talent | Openspection.com");
         return "index";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/randomimage", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] testphoto() throws IOException {
-        Random random = new Random();
-        int iback = random.nextInt(11);
-        InputStream in = servletContext.getResourceAsStream("/resources/img/back" + iback + ".jpg");
-        return IOUtils.toByteArray(in);
     }
 }

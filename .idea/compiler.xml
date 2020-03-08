@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="shield" />
         <module name="plugin-api" />
         <module name="webserver" />
         <module name="CodetallyPlugin" />
@@ -15,6 +16,7 @@
       <module name="app" target="1.8" />
       <module name="CodetallyPlugin" target="1.7" />
       <module name="plugin-api" target="1.7" />
+      <module name="shield" target="1.7" />
       <module name="webserver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -23,6 +25,7 @@
       <module name="CodetallyPlugin" options="" />
       <module name="app" options="-parameters" />
       <module name="plugin-api" options="-parameters" />
+      <module name="shield" options="" />
       <module name="webserver" options="-parameters" />
     </option>
   </component>

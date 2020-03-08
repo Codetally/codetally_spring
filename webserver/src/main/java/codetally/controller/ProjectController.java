@@ -80,37 +80,12 @@ public class ProjectController {
     }
     @RequestMapping(value = "/projects/search", method = RequestMethod.GET)
     public String searchforprojects(Model model, Pageable pageable,
-                                 @RequestParam("keywords") String keywords,
-                                 @RequestParam(value="location", required=false) String location,
-                                 @RequestParam(value="latitude", required=false) Double flatitude,
-                                 @RequestParam(value="longitude", required=false) Double flongitude,
-                                 @RequestParam(value="category_id", required=false) Integer categoryId) {
+                                 @RequestParam("keywords") String keywords) {
 
-        double latitude = flatitude;
-        double longitude = flongitude;
 
-        System.out.println("Keywords: " + keywords
-                + "Location: " + location
-                + "Latitude: " + latitude
-                + "Longitude: " + longitude
-                + " Category: " + categoryId);
-        if (latitude < 1 && longitude < 1) {
-
-            JSONArray joa = null;
-            try {
-                joa = (JSONArray) new JSONTokener(IOUtils.toString(new URL("https://nominatim.openstreetmap.org/search?q="+ URLEncoder.encode(location, "UTF-8")+"&format=json&addressdetails=1").openStream(), "UTF-8")).nextValue();
-                JSONObject jo = joa.getJSONObject(0);
-                latitude = jo.getDouble("lat");
-                longitude = jo.getDouble("lon");
-            } catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-
-        List<project> searchresults = projectService.findprojectsByTitleDescriptionAndLocation(keywords, keywords, latitude, longitude, 100, pageable);
+        List<Project> searchresults = projectService.search(keywords, pageable);
         model.addAttribute("searchresults", searchresults);
         model.addAttribute("keywords", keywords);
-        model.addAttribute("location", location);
 
         return "projectlist";
     }

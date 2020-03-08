@@ -1,6 +1,5 @@
-package codetally.service;
+package com.codetally.service;
 
-import codetally.model.ShieldCost;
 import codetally.model.github.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

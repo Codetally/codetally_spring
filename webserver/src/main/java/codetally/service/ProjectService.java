@@ -1,20 +1,18 @@
 package codetally.service;
 
 import codetally.model.Project;
+import codetally.model.User;
 import codetally.repository.ProjectRepository;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.Currency;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -28,6 +26,9 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserService userService;
+
     public List<Project> getAll() {
         return projectRepository.findAll();
     }
@@ -38,17 +39,23 @@ public class ProjectService {
         Example<Project> projectExample = Example.of(project, ExampleMatcher.matchingAny());
         Project returnProject = projectRepository.findOne(projectExample).get();
         if (returnProject==null) {
-            projectRepository.save(project);
+            save(project);
             return project;
         }
 
         return returnProject;
+    }
+    public List<Project> search(String keyword, Pageable pageable) {
+        return projectRepository.findByProjectnameContainingIgnoreCase(keyword, pageable);
     }
     public Project getById(Long id) {
         return projectRepository.getOne(id);
     }
 
     public void save(Project project) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = userService.findByUsername(authentication.getName());
+        project.setUser(loggedUser);
         projectRepository.save(project);
     }
 }

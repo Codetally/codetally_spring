@@ -1,6 +1,7 @@
 package codetally.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,9 @@ public class User {
     private String websiteurl;
     private String photourl;
     private String bannerurl;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Project> projects;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -140,5 +144,21 @@ public class User {
 
     public void setBannerurl(String bannerurl) {
         this.bannerurl = bannerurl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 }
