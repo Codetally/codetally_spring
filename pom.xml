@@ -11,6 +11,7 @@
         <module>plugin-api</module>
         <module>webserver</module>
         <module>shield</module>
+        <module>BitBucketWebhook</module>
     </modules>
     <name>Codetally Application</name>
     <url>https://www.codetally.com</url>

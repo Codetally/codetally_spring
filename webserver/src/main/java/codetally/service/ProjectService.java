@@ -38,10 +38,6 @@ public class ProjectService {
         project.setProjectkey(projectKey);
         Example<Project> projectExample = Example.of(project, ExampleMatcher.matchingAny());
         Project returnProject = projectRepository.findOne(projectExample).get();
-        if (returnProject==null) {
-            save(project);
-            return project;
-        }
 
         return returnProject;
     }
