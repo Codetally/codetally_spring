@@ -81,13 +81,15 @@ public class ChargeService {
     }
 
     //create and update
-    public void save(Charge charge) {
-        chargeRepository.save(charge);
+    public Charge save(Charge charge) {
+        return chargeRepository.save(charge);
     }
     //read
     public List<Charge> getAll() {
         return chargeRepository.findAll();
     }
+
+    public Charge get(Long chargeid) { return chargeRepository.getOne(chargeid);}
     //delete
     public void deleteCharge(Charge charge) {
         //charges is use may not be deleted.

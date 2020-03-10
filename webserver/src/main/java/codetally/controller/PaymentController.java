@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/")
 public class PaymentController {
 
     public static final String PAYPAL_SUCCESS_URL = "pay/success";
@@ -26,12 +25,12 @@ public class PaymentController {
     @Autowired
     private PaypalService paypalService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/pay", method = RequestMethod.GET)
     public String index(){
-        return "index";
+        return "pay";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "pay")
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public String pay(){
         String cancelUrl = "http://localhost" + "/" + PAYPAL_CANCEL_URL;
         String successUrl = "http://localhost" + "/" + PAYPAL_SUCCESS_URL;
