@@ -1,8 +1,9 @@
 package com.codetally.service;
 
-import codetally.model.github.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,18 +11,13 @@ import java.text.DecimalFormat;
 import java.util.Currency;
 import java.util.Locale;
 
+
 /**
  * Created by greg on 29/06/17.
  */
 @Service
 public class ShieldService {
     private static final Logger logger = LoggerFactory.getLogger(ShieldService.class);
-
-    @Autowired
-    ProjectService projectService;
-
-    @Autowired
-    CommitService commitService;
 
     public String getShieldByOwnerAndRepo(String owner, String repo) {
         ShieldCost shieldCost = getShieldCostByOwnerAndRepo(owner, repo);

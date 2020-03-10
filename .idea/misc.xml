@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/webhooks/GitlabWebhook/pom.xml" />
         <option value="$PROJECT_DIR$/webhooks/BitBucketWebhook/pom.xml" />
         <option value="$PROJECT_DIR$/webhooks/GithubWebhook/pom.xml" />
+        <option value="$PROJECT_DIR$/integrations/shield/pom.xml" />
       </list>
     </option>
   </component>

@@ -42,7 +42,14 @@ public class ProjectController {
 
         return "projectview";
     }
+    @RequestMapping(value = "/projects/sources", method = RequestMethod.GET)
+    public String projectSources(Model model) {
+// load source services and get them?
+        model.addAttribute("projectSources", projectService.getProjectSources());
+        model.addAttribute("pageTitle", "Create a new project.");
 
+        return "projectcreate";
+    }
     @RequestMapping(value = "/projects/create", method = RequestMethod.GET)
     public String projectCreate(Model model) {
 

@@ -7,11 +7,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>CodetallyPlugin</module>
+        <module>integrations</module>
         <module>plugin-api</module>
         <module>webserver</module>
-        <module>shield</module>
-        <module>BitBucketWebhook</module>
+        <module>notifications</module>
+        <module>webhooks</module>
     </modules>
     <name>Codetally Application</name>
     <url>https://www.codetally.com</url>

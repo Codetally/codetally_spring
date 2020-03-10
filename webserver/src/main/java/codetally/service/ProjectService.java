@@ -3,9 +3,11 @@ package codetally.service;
 import codetally.model.Project;
 import codetally.model.User;
 import codetally.repository.ProjectRepository;
+import com.codetally.plugin.ProjectSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,10 @@ public class ProjectService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    @Qualifier("projectSourceListFactoryBean")
+    Object projectSources;
 
     public List<Project> getAll() {
         return projectRepository.findAll();
@@ -57,5 +63,8 @@ public class ProjectService {
 
     public Project findByProjectname(String projectname) {
         return projectRepository.findByProjectname(projectname);
+    }
+    public List<ProjectSource> getProjectSources() {
+        return ((List<ProjectSource>) projectSources);
     }
 }

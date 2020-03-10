@@ -30,7 +30,7 @@
       <module name="GithubWebhook" options="" />
       <module name="app" options="-parameters" />
       <module name="plugin-api" options="-parameters" />
-      <module name="shield" options="" />
+      <module name="shield" options="-parameters" />
       <module name="webserver" options="-parameters" />
     </option>
   </component>
