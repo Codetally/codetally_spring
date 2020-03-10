@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "charge")
 public class Charge {
 
+    /* going to need a chargetemplate. Or a more rich linking object*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

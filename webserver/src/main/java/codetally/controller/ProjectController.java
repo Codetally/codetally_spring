@@ -1,7 +1,9 @@
 package codetally.controller;
 
+import codetally.model.Charge;
 import codetally.model.Project;
 import codetally.model.User;
+import codetally.service.ChargeService;
 import codetally.service.ProjectService;
 import codetally.service.UserService;
 import codetally.validator.ProjectValidator;
@@ -27,6 +29,9 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private ChargeService chargeService;
+
+    @Autowired
     private ProjectValidator projectValidator;
 
     @Autowired
@@ -41,6 +46,29 @@ public class ProjectController {
         model.addAttribute("pageTitle", singleproject.getProjectname());
 
         return "projectview";
+    }
+    @RequestMapping(value = "/projects/{projectid}/charges", method = RequestMethod.GET)
+    public String getProjectCharges(Model model, @PathVariable Long projectid) {
+
+        Project singleproject = projectService.getById(projectid);
+
+        model.addAttribute("singleproject", singleproject);
+        model.addAttribute("pageTitle", singleproject.getProjectname());
+
+        return "projectchargeview";
+    }
+    @RequestMapping(value = "/projects/{projectid}/charges/add", method = RequestMethod.GET)
+    public String addProjectCharge(Model model, @PathVariable Long projectid) {
+
+        Project singleproject = projectService.getById(projectid);
+        List<Charge> chargeList = chargeService.getAll();
+
+        model.addAttribute("singleproject", singleproject);
+        model.addAttribute("pageTitle", singleproject.getProjectname());
+        model.addAttribute("chargelist", chargeList);
+
+
+        return "projectchargeadd";
     }
     @RequestMapping(value = "/projects/sources", method = RequestMethod.GET)
     public String projectSources(Model model) {

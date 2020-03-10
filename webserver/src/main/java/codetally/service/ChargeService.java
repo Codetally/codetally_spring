@@ -26,9 +26,6 @@ public class ChargeService {
     @Autowired
     private ChargeRepository chargeRepository;
 
-    @Autowired
-    private LogService logService;
-
     public List<Charge> calculateCharges(Project project, Event event) {
 
         List<Charge> returnCharges = new ArrayList<>();

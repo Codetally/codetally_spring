@@ -1,8 +1,8 @@
 package codetally.controller;
 
 import codetally.model.Charge;
-import codetally.model.Project;
 import codetally.service.ChargeService;
+import codetally.validator.ChargeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +18,9 @@ import java.security.Principal;
 public class ChargeController {
     @Autowired
     private ChargeService chargeService;
+
+    @Autowired
+    private ChargeValidator chargeValidator;
 
     @RequestMapping(value = "/charges/{chargeid}", method = RequestMethod.GET)
     public String getSingleCharge(Model model, @PathVariable Long chargeid) {
