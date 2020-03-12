@@ -6,31 +6,31 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ShieldsIntegration" />
         <module name="plugin-api" />
-        <module name="shield" />
-        <module name="BitBucketWebhook" />
-        <module name="GitlabWebhook" />
-        <module name="GithubWebhook" />
+        <module name="GitlabIntegration" />
+        <module name="BitbucketIntegration" />
+        <module name="GithubIntegration" />
         <module name="webserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
-      <module name="BitBucketWebhook" target="1.7" />
-      <module name="GithubWebhook" target="1.7" />
-      <module name="GitlabWebhook" target="1.7" />
+      <module name="BitbucketIntegration" target="1.7" />
+      <module name="GithubIntegration" target="1.7" />
+      <module name="GitlabIntegration" target="1.7" />
       <module name="plugin-api" target="1.7" />
-      <module name="shield" target="1.7" />
+      <module name="ShieldsIntegration" target="1.7" />
       <module name="webserver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="BitBucketWebhook" options="" />
-      <module name="GithubWebhook" options="" />
+      <module name="BitbucketIntegration" options="" />
+      <module name="GithubIntegration" options="" />
+      <module name="ShieldsIntegration" options="-parameters" />
       <module name="app" options="-parameters" />
       <module name="plugin-api" options="-parameters" />
-      <module name="shield" options="-parameters" />
       <module name="webserver" options="-parameters" />
     </option>
   </component>

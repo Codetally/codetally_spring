@@ -3,6 +3,8 @@ package codetally.service;
 import codetally.model.Project;
 import codetally.model.User;
 import codetally.repository.ProjectRepository;
+import com.codetally.plugin.ExternalProject;
+import com.codetally.plugin.ProjectOwner;
 import com.codetally.plugin.ProjectSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,10 +56,38 @@ public class ProjectService {
         return projectRepository.getOne(id);
     }
 
+    public void importProjects(String className) {
+
+
+        ((List<ProjectSource>) projectSources).forEach(projectSource -> {
+            System.out.println("External project retrieval");
+            if (projectSource.getClass().getName().equalsIgnoreCase(className)) {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                User loggedUser = userService.findByUsername(authentication.getName());
+                ProjectOwner projectOwner = new ProjectOwner();
+                projectOwner.setEmail(loggedUser.getUsername());
+                projectOwner.setHandle(loggedUser.getName());
+                projectOwner.setUrl(loggedUser.getWebsiteurl());
+                List<ExternalProject> externalProjectList = projectSource.getProjects(projectOwner);
+                externalProjectList.forEach(externalProject -> {
+                    Project project = new Project();
+                    project.setProjectname(externalProject.getProjectname());
+                    project.setProjectkey(externalProject.getProjectkey());
+                    project.setProjecturl(externalProject.getProjecturl());
+                    save(project);
+                });
+            }
+
+        });
+    }
+
     public Project save(Project project) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User loggedUser = userService.findByUsername(authentication.getName());
         project.setUser(loggedUser);
+        if (project.getCharges()==null || project.getCharges().size()<1) {
+            //TODO: Set default charge model (?)
+        }
         return projectRepository.save(project);
     }
 
