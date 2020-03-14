@@ -2,7 +2,6 @@ package codetally.controller;
 
 import codetally.model.Charge;
 import codetally.model.Project;
-import codetally.model.User;
 import codetally.service.ChargeService;
 import codetally.service.ProjectService;
 import codetally.service.UserService;
@@ -15,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +45,18 @@ public class ProjectController {
 
         return "projectview";
     }
+
+    @RequestMapping(value = "/projects/", method = RequestMethod.GET)
+    public String getAllProject(Model model, @PathVariable Long projectid) {
+
+        List<Project> projectList = projectService.getAll();
+
+        model.addAttribute("projectlist", projectList);
+        model.addAttribute("pageTitle", "Project list");
+
+        return "projectlist";
+    }
+
     @RequestMapping(value = "/projects/{projectid}/charges", method = RequestMethod.GET)
     public String getProjectCharges(Model model, @PathVariable Long projectid) {
 
@@ -70,6 +80,17 @@ public class ProjectController {
 
         return "projectchargeadd";
     }
+
+    @RequestMapping(value = "/projects/import/{projectSourceName}", method = RequestMethod.GET)
+    public String projectImport(Model model, @PathVariable String projectSourceName) {
+        List<Project> projectList = projectService.importProjects(projectSourceName);
+// load source services and get them?
+        model.addAttribute("projectList", projectList);
+        model.addAttribute("pageTitle", "Imported Projects new project.");
+
+        return "projectcreate";
+    }
+
     @RequestMapping(value = "/projects/sources", method = RequestMethod.GET)
     public String projectSources(Model model) {
 // load source services and get them?
@@ -78,6 +99,7 @@ public class ProjectController {
 
         return "projectcreate";
     }
+
     @RequestMapping(value = "/projects/create", method = RequestMethod.GET)
     public String projectCreate(Model model) {
 

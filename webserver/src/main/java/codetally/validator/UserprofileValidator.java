@@ -2,6 +2,7 @@ package codetally.validator;
 
 
 import codetally.model.User;
+import codetally.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

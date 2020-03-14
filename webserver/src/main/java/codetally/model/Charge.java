@@ -20,8 +20,6 @@ public class Charge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @SerializedName("calculationtype")
-    private String mCalculationtype;
 
     private double chargeAmount;
     @SerializedName("chargeref")
@@ -33,13 +31,6 @@ public class Charge {
 
     private EventAction eventAction;
 
-    public String getCalculationtype() {
-        return mCalculationtype;
-    }
-
-    public void setCalculationtype(String calculationtype) {
-        mCalculationtype = calculationtype;
-    }
 
     public String getChargeref() {
         return mChargeref;

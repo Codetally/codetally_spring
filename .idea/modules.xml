@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/integrations/BitbucketIntegration/BitBucketWebhook.iml" filepath="$PROJECT_DIR$/integrations/BitbucketIntegration/BitBucketWebhook.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/BitbucketIntegration/BitbucketIntegration.iml" filepath="$PROJECT_DIR$/integrations/BitbucketIntegration/BitbucketIntegration.iml" />
-      <module fileurl="file://$PROJECT_DIR$/integrations/GithubIntegration/GithubWebhook.iml" filepath="$PROJECT_DIR$/integrations/GithubIntegration/GithubWebhook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/integrations/GithubIntegration/GithubIntegration.iml" filepath="$PROJECT_DIR$/integrations/GithubIntegration/GithubIntegration.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/GitlabIntegration/GitlabIntegration.iml" filepath="$PROJECT_DIR$/integrations/GitlabIntegration/GitlabIntegration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/integrations/GitlabIntegration/GitlabWebhook.iml" filepath="$PROJECT_DIR$/integrations/GitlabIntegration/GitlabWebhook.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/ShieldsIntegration/ShieldsIntegration.iml" filepath="$PROJECT_DIR$/integrations/ShieldsIntegration/ShieldsIntegration.iml" />
       <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/integrations.iml" filepath="$PROJECT_DIR$/integrations/integrations.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin-api/plugin-api.iml" filepath="$PROJECT_DIR$/plugin-api/plugin-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/integrations/ShieldsIntegration/shield.iml" filepath="$PROJECT_DIR$/integrations/ShieldsIntegration/shield.iml" />
       <module fileurl="file://$PROJECT_DIR$/webserver/webserver.iml" filepath="$PROJECT_DIR$/webserver/webserver.iml" />
     </modules>
   </component>

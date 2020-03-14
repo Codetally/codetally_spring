@@ -4,8 +4,8 @@ import com.codetally.plugin.Configuration;
 import com.codetally.plugin.Event;
 import com.codetally.plugin.EventAction;
 import com.codetally.plugin.EventAdapter;
-import com.github.model.Commit;
-import com.github.model.GithubEvent;
+import com.gitlab.model.Commit;
+import com.gitlab.model.GitlabEvent;
 import com.google.gson.Gson;
 
 import java.sql.Date;

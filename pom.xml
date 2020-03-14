@@ -10,8 +10,6 @@
         <module>integrations</module>
         <module>plugin-api</module>
         <module>webserver</module>
-        <module>notifications</module>
-        <module>webhooks</module>
     </modules>
     <name>Codetally Application</name>
     <url>https://www.codetally.com</url>

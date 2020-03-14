@@ -1,4 +1,4 @@
-package codetally.configuration;
+package com.github;
 
 /**
  * Created by greg on 25/06/17.

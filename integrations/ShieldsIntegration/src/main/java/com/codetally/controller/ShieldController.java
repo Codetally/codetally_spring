@@ -1,5 +1,6 @@
 package com.codetally.controller;
 
+import com.codetally.service.ShieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -8,7 +9,7 @@ public class ShieldController {
 
     @Autowired
     private ShieldService shieldService;
-
+/*
     @ResponseBody
     @RequestMapping(value = "/shield/{projectid}/{cost}", method = RequestMethod.GET , produces = "image/svg+xml")
     protected String getShield(@PathVariable Long projectid,
@@ -26,4 +27,6 @@ public class ShieldController {
         resp.setHeader("Content-Type", "image/svg+xml");
         resp.getWriter().write(response);
     }
+
+ */
 }

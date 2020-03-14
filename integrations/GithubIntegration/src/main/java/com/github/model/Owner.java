@@ -2,10 +2,7 @@ package com.github.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
 public class Owner {
 
     @SerializedName("avatar_url")

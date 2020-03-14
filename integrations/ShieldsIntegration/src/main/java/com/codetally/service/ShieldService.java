@@ -1,10 +1,9 @@
 package com.codetally.service;
 
 
-
+import com.codetally.model.ShieldCost;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -26,10 +25,8 @@ public class ShieldService {
 
     public ShieldCost getShieldCostByOwnerAndRepo(String owner, String repo) {
 
-        long repositoryId = projectService.getSingleIdByOwnerAndRepo(owner, repo);
-        float repoCost = commitService.getRepoCodecost(repositoryId);
-        Currency currency = projectService.getCurrency(repositoryId);
-        return getFriendlyShieldValue(repoCost, currency);
+
+        return getFriendlyShieldValue(0.01f, Currency.getInstance(Locale.CANADA));
     }
 
     public ShieldCost getFriendlyShieldValue(float repoCost, Currency currency) {
@@ -87,11 +84,11 @@ public class ShieldService {
 
     public String getShieldByOwnerAndRepoAndCost(String owner, String repo, String shieldCost) {
 
-        Repository repository = projectService.getSingleByOwnerAndRepo(owner, repo);
-        repository.getC
-        Currency currency = projectService.getCurrency(repositoryId);
-        ShieldCost shieldCostObject = getFriendlyShieldValue(Float.valueOf(shieldCost), currency);
 
-        return shieldCostObject.getCurrency_sign() + " " + shieldCostObject.getAmount() + " " + shieldCostObject.getMultiplier();
+        return "";
+    }
+
+    public ShieldCost getShieldCostByProjectId(Long projectid) {
+        return null;
     }
 }

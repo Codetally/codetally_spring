@@ -19,7 +19,6 @@ public class Transaction {
     private String actionref;
     private List<Charge> chargeList;
     private Event event;
-    private List<Logline> loglineList;
     private double transactionCredit;
     private double transactionDebit;
     private double transactionNet; //before tax
@@ -65,13 +64,7 @@ public class Transaction {
         this.event = event;
     }
 
-    public List<Logline> getLoglineList() {
-        return loglineList;
-    }
 
-    public void setLoglineList(List<Logline> loglineList) {
-        this.loglineList = loglineList;
-    }
 
     public double getTransactionCredit() {
         return transactionCredit;

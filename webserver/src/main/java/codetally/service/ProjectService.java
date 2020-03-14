@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,17 +50,20 @@ public class ProjectService {
 
         return returnProject;
     }
+
     public List<Project> search(String keyword, Pageable pageable) {
         return projectRepository.findByProjectnameContainingIgnoreCase(keyword, pageable);
     }
+
     public Project getById(Long id) {
         return projectRepository.getOne(id);
     }
 
-    public void importProjects(String className) {
+    public List<Project> importProjects(String className) {
 
+        List<Project> projectList = new ArrayList<>();
 
-        ((List<ProjectSource>) projectSources).forEach(projectSource -> {
+        getProjectSources().forEach(projectSource -> {
             System.out.println("External project retrieval");
             if (projectSource.getClass().getName().equalsIgnoreCase(className)) {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -74,18 +78,20 @@ public class ProjectService {
                     project.setProjectname(externalProject.getProjectname());
                     project.setProjectkey(externalProject.getProjectkey());
                     project.setProjecturl(externalProject.getProjecturl());
-                    save(project);
+                    project = save(project);
+                    projectList.add(project);
                 });
             }
 
         });
+        return projectList;
     }
 
     public Project save(Project project) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User loggedUser = userService.findByUsername(authentication.getName());
         project.setUser(loggedUser);
-        if (project.getCharges()==null || project.getCharges().size()<1) {
+        if (project.getCharges() == null || project.getCharges().size() < 1) {
             //TODO: Set default charge model (?)
         }
         return projectRepository.save(project);
@@ -94,6 +100,7 @@ public class ProjectService {
     public Project findByProjectname(String projectname) {
         return projectRepository.findByProjectname(projectname);
     }
+
     public List<ProjectSource> getProjectSources() {
         return ((List<ProjectSource>) projectSources);
     }
