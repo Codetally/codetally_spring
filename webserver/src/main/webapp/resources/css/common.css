@@ -1,81 +1,93 @@
-/*body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
+body {
+  font-size: .875rem;
 }
 
-.form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
 }
 
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-    margin-bottom: 10px;
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
-.form-signin .checkbox {
-    font-weight: normal;
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 48px; /* Height of navbar */
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
-.form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
 }
 
-.form-signin .form-control:focus {
-    z-index: 2;
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
 }
 
-.form-signin input {
-    margin-top: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+.sidebar .nav-link.active {
+  color: #007bff;
 }
 
-.form-signin button {
-    margin-top: 10px;
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
 }
 
-.has-error {
-    color: red
-}
-*/
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
 }
 
-.container {
-  max-width: 960px;
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
 }
 
-.pricing-header {
-  max-width: 700px;
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
 }
 
-.card-deck .card {
-  min-width: 220px;
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
 }
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
-
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-
-.leading {
-    background: url(/randomimage) no-repeat;
-    background-size: cover;
-}
-.unleading {
-	color:#fff;
-	background: rgba(0,0,0,.6);
-}

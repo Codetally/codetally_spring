@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/integrations/GitlabIntegration/GitlabWebhook.iml" filepath="$PROJECT_DIR$/integrations/GitlabIntegration/GitlabWebhook.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/ShieldsIntegration/ShieldsIntegration.iml" filepath="$PROJECT_DIR$/integrations/ShieldsIntegration/ShieldsIntegration.iml" />
       <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consumer/consumer.iml" filepath="$PROJECT_DIR$/consumer/consumer.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/integrations.iml" filepath="$PROJECT_DIR$/integrations/integrations.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin-api/plugin-api.iml" filepath="$PROJECT_DIR$/plugin-api/plugin-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrations/ShieldsIntegration/shield.iml" filepath="$PROJECT_DIR$/integrations/ShieldsIntegration/shield.iml" />

@@ -6,21 +6,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ShieldsIntegration" />
-        <module name="plugin-api" />
-        <module name="shield" />
-        <module name="BitBucketWebhook" />
-        <module name="GitlabIntegration" />
-        <module name="BitbucketIntegration" />
-        <module name="GitlabWebhook" />
-        <module name="GithubIntegration" />
         <module name="webserver" />
+        <module name="BitbucketIntegration" />
+        <module name="shield" />
+        <module name="GitlabIntegration" />
+        <module name="consumer" />
+        <module name="plugin-api" />
+        <module name="GitlabWebhook" />
+        <module name="BitBucketWebhook" />
+        <module name="GithubIntegration" />
+        <module name="ShieldsIntegration" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
       <module name="BitbucketIntegration" target="1.7" />
       <module name="BitBucketWebhook" target="1.7" />
+      <module name="consumer" target="1.7" />
       <module name="GithubIntegration" target="9" />
       <module name="GitlabIntegration" target="9" />
       <module name="GitlabWebhook" target="1.7" />
@@ -38,6 +40,7 @@
       <module name="GitlabIntegration" options="-parameters" />
       <module name="ShieldsIntegration" options="-parameters" />
       <module name="app" options="-parameters" />
+      <module name="consumer" options="" />
       <module name="integrations" options="-parameters" />
       <module name="plugin-api" options="-parameters" />
       <module name="shield" options="-parameters" />
